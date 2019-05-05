@@ -18,6 +18,8 @@ jobs:
         - VERSION=1.0.$TRAVIS_BUILD_NUMBER
         - echo VERSION $VERSION
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - docker tag testmvc denstorti/testmvc:$VERSION
         - docker push denstorti/testmvc:$VERSION
 
     - stage: "Git tagging"
