@@ -7,15 +7,17 @@ jobs:
   include:
     - stage: "Build"
       script: 
-        - docker build -t denstorti/testmvc:1.0.0 .
-        - docker run -d -p 5000:80 denstorti/testmvc:1.0.0 
+        - docker build -t denstorti/testmvc .
+        - docker run -d -p 5000:80 denstorti/testmvc
         - docker ps -a
         - VERSION=1.0.$TRAVIS_BUILD_NUMBER
         - echo VERSION $VERSION
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker images
-        - docker tag testmvc denstorti/testmvc:$VERSION
+        - docker tag denstorti/testmvc denstorti/testmvc:$VERSION
         - docker push denstorti/testmvc:$VERSION
+        - git config credential.helper "store --file=.git/credentials"
+        - echo "https://$GH_TOKEN:@github.com" > .git/credentials
         - git tag $VERSION
         - git push origin --tags
         
