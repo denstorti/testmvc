@@ -5,8 +5,7 @@ services:
 
 before_install:
   - docker build -t denstorti/testmvc:1.0.0 .
-  - docker run -d -p 5000:4567 denstorti/testmvc:1.0.0 
-  - docker ps -a
 
 script:
-  
+  - docker run -d -p 5000:4567 denstorti/testmvc:1.0.0 
+  - docker ps -a
